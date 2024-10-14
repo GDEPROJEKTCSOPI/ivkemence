@@ -39,6 +39,7 @@ cursor.execute('''
 # bevitt értékek ellenőrzése
 # műveletek feldolgása
 # adatok feldolgása
+# add line to make changes
 
 # lezárás
 conn.commit()
