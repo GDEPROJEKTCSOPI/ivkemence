@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4010ca08-aacc-4c42-8a7a-f52aa0b8b86a" name="Changes" comment="added line" />
+    <list default="true" id="4010ca08-aacc-4c42-8a7a-f52aa0b8b86a" name="Changes" comment="corr documenttion- excel&#10;add basic files">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adagok.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Adagok.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hűtőpanelek.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hutopanelek_id.py" beforeDir="false" afterPath="$PROJECT_DIR$/hutopanelek_id.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,6 +34,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Python.hutopanelek_id.executor&quot;: &quot;Run&quot;,
     &quot;Python.ivkemence.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
@@ -60,6 +67,10 @@
       <workItem from="1728921981354" duration="62000" />
       <workItem from="1728922063975" duration="144000" />
       <workItem from="1728922210536" duration="351000" />
+      <workItem from="1729080716453" duration="1908000" />
+      <workItem from="1729082701468" duration="251000" />
+      <workItem from="1729082976600" duration="2403000" />
+      <workItem from="1729085415833" duration="3493000" />
     </task>
     <task id="LOCAL-00001" summary="added basic db and py file">
       <option name="closed" value="true" />
@@ -77,7 +88,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728908459870</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="corr documenttion- excel&#10;add basic files">
+      <option name="closed" value="true" />
+      <created>1729080784269</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1729080784269</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -129,9 +148,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added basic db and py file" />
     <MESSAGE value="added line" />
-    <option name="LAST_COMMIT_MESSAGE" value="added line" />
+    <MESSAGE value="corr documenttion- excel&#10;add basic files" />
+    <option name="LAST_COMMIT_MESSAGE" value="corr documenttion- excel&#10;add basic files" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ivkemence$ivkemence.coverage" NAME="ivkemence Coverage Results" MODIFIED="1728904035242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ivkemence$hutopanelek_id.coverage" NAME="hutopanelek_id Coverage Results" MODIFIED="1729088338278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
