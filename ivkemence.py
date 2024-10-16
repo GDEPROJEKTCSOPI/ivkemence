@@ -77,13 +77,12 @@ cursor = conn.cursor()
 cursor.execute('''
     CREATE TABLE adagok (
     adag_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    datumido_kezdet DATE NOT NULL,
-    datumido_veg DATE NOT NULL,
+    start_datetime DATE NOT NULL,
+    end_datetime DATE NOT NULL,
     koztes_ido INTEGER,
     idotartam INTEGER NOT NULL
     )
 ''')
-
 
 cursor.execute('''
     CREATE TABLE hutopanelek (
@@ -103,9 +102,25 @@ cursor.execute('''
     )
 ''')
 
+### optimalizálja a keresést ,mert ez alapján lesz rendezve az adat
+
+cursor.execute('''
+    CREATE INDEX idx_adagok_datumido_kezdet ON adagok(start_datetime);
+''')
+
+cursor.execute('''
+    CREATE INDEX idx_adagok_datumido_kezdet ON adagok(adag_id);
+''')
+
+cursor.execute('''
+    CREATE INDEX idx_hutopanelek_name ON hutopanelek(hutopanel_id);
+''')
+
+cursor.execute('''
+    CREATE INDEX idx_adagok_datumido_kezdet ON adagok(datumido);
+''')
+
 print(f"DB fájl létrehozva : {path_to_db_df}")
-
-
 
 
 # adatok feltöltése
