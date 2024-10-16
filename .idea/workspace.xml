@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4010ca08-aacc-4c42-8a7a-f52aa0b8b86a" name="Changes" comment="corr documenttion- excel&#10;add basic files">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adagok.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Adagok.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hűtőpanelek.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hutopanelek_id.py" beforeDir="false" afterPath="$PROJECT_DIR$/hutopanelek_id.py" afterDir="false" />
+    <list default="true" id="4010ca08-aacc-4c42-8a7a-f52aa0b8b86a" name="Changes" comment="correction hutopanelek_id so it could be used anywhere">
+      <change beforePath="$PROJECT_DIR$/ivkemence.py" beforeDir="false" afterPath="$PROJECT_DIR$/ivkemence.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +66,7 @@
       <workItem from="1729080716453" duration="1908000" />
       <workItem from="1729082701468" duration="251000" />
       <workItem from="1729082976600" duration="2403000" />
-      <workItem from="1729085415833" duration="3493000" />
+      <workItem from="1729085415833" duration="3856000" />
     </task>
     <task id="LOCAL-00001" summary="added basic db and py file">
       <option name="closed" value="true" />
@@ -96,7 +92,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729080784269</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="correction hutopanelek_id so it could be used anywhere">
+      <option name="closed" value="true" />
+      <created>1729089170598</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1729089170598</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -149,10 +153,11 @@
     <MESSAGE value="added basic db and py file" />
     <MESSAGE value="added line" />
     <MESSAGE value="corr documenttion- excel&#10;add basic files" />
-    <option name="LAST_COMMIT_MESSAGE" value="corr documenttion- excel&#10;add basic files" />
+    <MESSAGE value="correction hutopanelek_id so it could be used anywhere" />
+    <option name="LAST_COMMIT_MESSAGE" value="correction hutopanelek_id so it could be used anywhere" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ivkemence$ivkemence.coverage" NAME="ivkemence Coverage Results" MODIFIED="1728904035242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ivkemence$hutopanelek_id.coverage" NAME="hutopanelek_id Coverage Results" MODIFIED="1729088338278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ivkemence$ivkemence.coverage" NAME="ivkemence Coverage Results" MODIFIED="1729089290000" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ivkemence$hutopanelek_id.coverage" NAME="hutopanelek_id Coverage Results" MODIFIED="1729089085713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

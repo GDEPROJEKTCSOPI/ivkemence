@@ -9,7 +9,10 @@ Mindig új Branchre mentsd a változtatást és ha lészt vagy add a fő branche
 A projekt nyelve a magyar
 Ne másolj be random chatgpt-s kódot mert több bajt okozhat mint hasznot
 
-## Tagok:
-
 ## Kód futtatása:
 
+Klónozd githubról
+Nyisd meg a ivkemence mappát, vagy ahova elmentetted
+Nyisd meg a python filet a szöveg szerkesztőben( VSCode vagy PyCharm vagy egyéb)
+Futtasd a kódot( Ez új fileokat fog generálni , ezeket ne módosítsd közvetlenül , és ne töltsd fel githubra)
+Kövesd a terminálban megjelenő utasításokat
