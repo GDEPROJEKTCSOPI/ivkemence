@@ -105,19 +105,15 @@ cursor.execute('''
 ### optimalizálja a keresést ,mert ez alapján lesz rendezve az adat
 
 cursor.execute('''
-    CREATE INDEX idx_adagok_datumido_kezdet ON adagok(start_datetime);
+    CREATE INDEX idx_adagok_start_datetime ON adagok(start_datetime);
 ''')
 
 cursor.execute('''
-    CREATE INDEX idx_adagok_datumido_kezdet ON adagok(adag_id);
+    CREATE INDEX idx_adagok_adag_id ON adagok(adag_id);
 ''')
 
 cursor.execute('''
-    CREATE INDEX idx_hutopanelek_name ON hutopanelek(hutopanel_id);
-''')
-
-cursor.execute('''
-    CREATE INDEX idx_adagok_datumido_kezdet ON adagok(datumido);
+    CREATE INDEX idx_hutopanelek_hutopanel_id ON hutopanelek(hutopanel_id);
 ''')
 
 print(f"DB fájl létrehozva : {path_to_db_df}")
