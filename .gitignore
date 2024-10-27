@@ -1,7 +1,8 @@
 ### these are generated file, no need to upload, neither to copy
 
-hutopanelek_atalakitott.csv
-adagok_atalakitott.csv
+db_creator/csv/hutopanelek_atalakitott.csv
+db_creator/csv/adagok_atalakitott.csv
 ivkemence.db
 .idea/
 .tmp
+.venv/

@@ -2,8 +2,8 @@
 #1 python
 import sqlite3
 
-db_path = r'C:\\sql\betoltes_egyben2.db'
-conn = sqlite3.connect(r'C:\\sql\betoltes_egyben2.db')
+path_to_db = r'output/ivkemence.db'
+conn = sqlite3.connect(path_to_db)
 cursor = conn.cursor()
 
 cursor.execute('''

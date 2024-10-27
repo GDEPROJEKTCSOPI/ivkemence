@@ -3,8 +3,8 @@ import pandas as pd
 from datetime import datetime
 
 #Adatbázis létrehozása és csatlakozás
-path_to_db = r'C:\\sql\\betoltes_egyben2.db'
-conn = sqlite3.connect(r'C:\\sql\\betoltes_egyben2.db')
+path_to_db = r'output/ivkemence.db'
+conn = sqlite3.connect(path_to_db)
 cursor = conn.cursor()
 
 #'Hutopanelek' tábla létrehozása és feltöltése
@@ -23,19 +23,19 @@ panel_data.to_sql('hutopanelek', conn, if_exists='append', index=False)
 
 #'Homerseklet' tábla létrehozása
 cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Homerseklet (
+    CREATE TABLE IF NOT EXISTS homerseklet (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     hutopanel_id INTEGER NOT NULL,
     adag_id INTEGER NOT NULL,
     datumido TEXT NOT NULL,
     homerseklet REAL,
-    FOREIGN KEY (hutopanel_id) REFERENCES Hutopanelek(hutopanel_id),
+    FOREIGN KEY (hutopanel_id) REFERENCES hutopanelek(hutopanel_id),
     FOREIGN KEY (adag_id) REFERENCES adagok(adag_id)
     )
 ''')
 
 #hutopanelek_atalakitott.csv' fájl betöltése
-homerseklet_df = pd.read_csv(r'C:\Users\VG\Desktop\adatbeemeles\hutopanelek_atalakitott.csv', delimiter=';')
+homerseklet_df = pd.read_csv(r'csv/hutopanelek_atalakitott.csv', delimiter=';')
 
 #Adatok feldolgozása: minden panel oszlopának hozzáadása a megfelelő formátumban
 combined_data = []
@@ -71,9 +71,10 @@ cursor.execute('''
 #Indexek létrehozása a 'adagok' táblához
 cursor.execute('CREATE INDEX IF NOT EXISTS idx_adagok_start_datetime ON adagok(start_datetime);')
 cursor.execute('CREATE INDEX IF NOT EXISTS idx_adagok_adag_id ON adagok(adag_id);')
+cursor.execute('CREATE INDEX IF NOT EXISTS idx_hutopanelek_hutopanel_id ON hutopanelek(hutopanel_id);')
 
 #'adagok_atalakitott.csv' fájl betöltése és oszlopok átnevezése
-adagok_df = pd.read_csv(r'C:\Users\VG\Desktop\adatbeemeles\adagok_atalakitott.csv', delimiter=';')
+adagok_df = pd.read_csv(r'csv/adagok_atalakitott.csv', delimiter=';')
 adagok_df = adagok_df.rename(columns={
     'start_datetime': 'start_datetime',
     'end_datetime': 'end_datetime',
