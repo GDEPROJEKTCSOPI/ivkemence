@@ -3,8 +3,8 @@ import pandas as pd
 from datetime import datetime
 
 #Adatbázis létrehozása és csatlakozás
-path_to_db = r'C:\\sql\\betoltes_egyben2.db'
-conn = sqlite3.connect(r'C:\\sql\\betoltes_egyben2.db')
+path_to_db = r'ivkemence.db'
+conn = sqlite3.connect(r'ivkemence.db')
 cursor = conn.cursor()
 
 #'Hutopanelek' tábla létrehozása és feltöltése
@@ -35,7 +35,7 @@ cursor.execute('''
 ''')
 
 #hutopanelek_atalakitott.csv' fájl betöltése
-homerseklet_df = pd.read_csv(r'C:\Users\VG\Desktop\adatbeemeles\hutopanelek_atalakitott.csv', delimiter=';')
+homerseklet_df = pd.read_csv(r'hutopanelek_atalakitott.csv', delimiter=';')
 
 #Adatok feldolgozása: minden panel oszlopának hozzáadása a megfelelő formátumban
 combined_data = []
@@ -73,7 +73,7 @@ cursor.execute('CREATE INDEX IF NOT EXISTS idx_adagok_start_datetime ON adagok(s
 cursor.execute('CREATE INDEX IF NOT EXISTS idx_adagok_adag_id ON adagok(adag_id);')
 
 #'adagok_atalakitott.csv' fájl betöltése és oszlopok átnevezése
-adagok_df = pd.read_csv(r'C:\Users\VG\Desktop\adatbeemeles\adagok_atalakitott.csv', delimiter=';')
+adagok_df = pd.read_csv(r'adagok_atalakitott.csv', delimiter=';')
 adagok_df = adagok_df.rename(columns={
     'start_datetime': 'start_datetime',
     'end_datetime': 'end_datetime',
