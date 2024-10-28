@@ -1,4 +1,4 @@
-# modulok, könyvtárak,keretrendszerek beolvasása
+# modulok, könyvtárak, keretrendszerek beolvasása
 import sqlite3
 import pandas as pd
 
@@ -10,10 +10,15 @@ hutopanelek_df = pd.read_csv(file_path_hutopanelek, sep=';', encoding='utf-8')
 file_path_adagok = r'adagok.csv'
 adagok_df = pd.read_csv(file_path_adagok, encoding='utf-8', sep=';')
 
-# 'Panel hőfok 1 [°C] Time' átalakítása
+# 'Panel hőfok 1 [°C] Time' átalakítása másodperc pontosságú datetime formátumra
 hutopanelek_df['Panel hőfok 1 [°C] Time'] = pd.to_datetime(
-    hutopanelek_df['Panel hőfok 1 [°C] Time'], format='%Y.%m.%d %H:%M', errors='coerce'
+    hutopanelek_df['Panel hőfok 1 [°C] Time'], format='%Y.%m.%d %H:%M:%S', errors='coerce'
 )
+
+# Ellenőrizzük, hogy mely sorok tartalmaznak NaT értékeket az időkonverzió után
+if hutopanelek_df['Panel hőfok 1 [°C] Time'].isna().any():
+    print("Figyelmeztetés: Néhány időadat nem lett konvertálva, mert nem felel meg a megadott formátumnak.")
+    print(hutopanelek_df[hutopanelek_df['Panel hőfok 1 [°C] Time'].isna()])
 
 # Új oszlop létrehozása - Kezdeti dátum és idő
 # Új oszlop létrehozása - Vége dátum és idő
@@ -21,7 +26,7 @@ adagok_df['start_datetime'] = pd.to_datetime(adagok_df['Kezdeti datum'] + ' ' + 
 adagok_df['end_datetime'] = pd.to_datetime(adagok_df['Vege datum'] + ' ' + adagok_df['Vege ido'], errors='coerce')
 
 # A DataFrame exportálása új CSV fájlba UTF-8 kódolással és pontosvesszővel elválasztva
-output_path_adagok = r'adagok_atalakitott.csv'
+output_path_adagok = r'.\adagok_atalakitott.csv'
 adagok_df.to_csv(output_path_adagok, sep=';', encoding='utf-8', index=False)
 
 print(f"CSV fájl elmentve ide: {output_path_adagok}")
@@ -29,11 +34,11 @@ print(f"CSV fájl elmentve ide: {output_path_adagok}")
 # Az átalakított file beolvasása
 adagok_atalakitott_df = pd.read_csv(output_path_adagok, sep=';', encoding='utf-8')
 
-#  Az idők átalakítása datetime formátumra az adagok fájlban
+# Az idők átalakítása datetime formátumra az adagok fájlban
 adagok_atalakitott_df['start_datetime'] = pd.to_datetime(adagok_atalakitott_df['start_datetime'].str.strip().str.replace('\xa0', ''), errors='coerce')
 adagok_atalakitott_df['end_datetime'] = pd.to_datetime(adagok_atalakitott_df['end_datetime'].str.strip().str.replace('\xa0', ''), errors='coerce')
 
-# Az idők átalakítása datetime formátumra a hutopanelek fájlban
+# Az idők átalakítása datetime formátumra a hutopanelek fájlban (infer_datetime_format eltávolítva)
 hutopanelek_df['Panel hőfok 1 [°C] Time'] = pd.to_datetime(
     hutopanelek_df['Panel hőfok 1 [°C] Time'], errors='coerce'
 )
@@ -62,9 +67,9 @@ cols.insert(0, cols.pop(cols.index('id')))  # Move 'id' to the first position
 hutopanelek_df = hutopanelek_df[cols]
 hutopanelek_df.rename(columns={'id': 'Adagszam'}, inplace=True)
 
-# A DataFrame exportálása új CSV fájlba UTF-8 kódolással és pontosvesszővel elválasztva
+# A DataFrame exportálása új CSV fájlba UTF-8 kódolással és pontosvesszővel elválasztva, másodperces pontosság megőrzése
 output_path_hutopanelek = r'hutopanelek_atalakitott.csv'
+hutopanelek_df['Panel hőfok 1 [°C] Time'] = hutopanelek_df['Panel hőfok 1 [°C] Time'].dt.strftime('%Y-%m-%d %H:%M:%S')
 hutopanelek_df.to_csv(output_path_hutopanelek, sep=';', encoding='utf-8', index=False)
 
 print(f"CSV fájl elmentve ide: {output_path_hutopanelek}")
-
