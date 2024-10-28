@@ -7,8 +7,7 @@ futtatas = [
     'filter_the_data.py'
 ]
 
-# adatok feltöltése
-# bevitt értékek ellenőrzése
+
 # műveletek feldolgása
 # adatok feldolgása
 # add line to make changes
