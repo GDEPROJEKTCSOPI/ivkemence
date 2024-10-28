@@ -21,7 +21,7 @@ adagok_df['start_datetime'] = pd.to_datetime(adagok_df['Kezdeti datum'] + ' ' + 
 adagok_df['end_datetime'] = pd.to_datetime(adagok_df['Vege datum'] + ' ' + adagok_df['Vege ido'], errors='coerce')
 
 # A DataFrame exportálása új CSV fájlba UTF-8 kódolással és pontosvesszővel elválasztva
-output_path_adagok = r'.\adagok_atalakitott.csv'
+output_path_adagok = r'adagok_atalakitott.csv'
 adagok_df.to_csv(output_path_adagok, sep=';', encoding='utf-8', index=False)
 
 print(f"CSV fájl elmentve ide: {output_path_adagok}")
@@ -35,7 +35,7 @@ adagok_atalakitott_df['end_datetime'] = pd.to_datetime(adagok_atalakitott_df['en
 
 # Az idők átalakítása datetime formátumra a hutopanelek fájlban
 hutopanelek_df['Panel hőfok 1 [°C] Time'] = pd.to_datetime(
-    hutopanelek_df['Panel hőfok 1 [°C] Time'], errors='coerce', infer_datetime_format=True
+    hutopanelek_df['Panel hőfok 1 [°C] Time'], errors='coerce'
 )
 
 # A nem idő vagyis type hibás adatokat töröljük

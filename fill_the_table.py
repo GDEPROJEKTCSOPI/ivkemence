@@ -48,7 +48,22 @@ for panel_id in range(1, 16):  # 1-től 15-ig minden panelre
         temp_data['hutopanel_id'] = panel_id  # Minden panelhez a megfelelő ID hozzárendelése
         # Convert datumido column to datetime format, handling mixed formats
         temp_data['datumido'] = pd.to_datetime(temp_data['datumido'], format='mixed').dt.strftime('%Y-%m-%d %H:%M:%S')
-        combined_data.append(temp_data)
+        valid_homerseklet = []
+        for temp in temp_data['homerseklet']:
+            try:
+                # Replace commas with periods if present and convert to float
+                clean_temp = float(str(temp).replace(',', '.'))
+                valid_homerseklet.append(clean_temp)
+            except ValueError:
+                # Log invalid temperature values (optional) and skip them
+                print(f"Invalid temperature value skipped: {temp}")
+                valid_homerseklet.append(None)
+
+        temp_data['homerseklet'] = valid_homerseklet  # Update the DataFrame with cleaned data
+
+        # Only append valid data rows (filter out rows where temperature is None)
+        valid_rows = temp_data[temp_data['homerseklet'].notnull()]
+        combined_data.append(valid_rows)
 
 #Az összesített adatokat egy DataFrame-be konvertáljuk
 final_data = pd.concat(combined_data, ignore_index=True)
