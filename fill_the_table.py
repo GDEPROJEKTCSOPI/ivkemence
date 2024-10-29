@@ -46,9 +46,10 @@ for panel_id in range(1, 16):  # 1-től 15-ig minden panelre
         temp_data = homerseklet_df[['Adagszam', time_column, value_column]].copy()
         temp_data.columns = ['adag_id', 'datumido', 'homerseklet']  # Oszlopok átnevezése az adatbázis számára
         temp_data['hutopanel_id'] = panel_id  # Minden panelhez a megfelelő ID hozzárendelése
-        # Convert datumido column to datetime format to preserve seconds
+        # a hibás adatokat amik , -vel vannak átalakítjuk hogy ne legyen type hiba
+        temp_data['homerseklet'] = temp_data['homerseklet'].str.replace(',', '.').astype(float)
         temp_data['datumido'] = pd.to_datetime(temp_data['datumido'], errors='coerce')
-        # Szöveg formátumba alakítás a másodpercek megőrzéséhez
+        # Szöveg formátumba alakítás a másodpercek megőrzéséhezS
         temp_data['datumido'] = temp_data['datumido'].dt.strftime('%Y-%m-%d %H:%M:%S')
         combined_data.append(temp_data)
 
