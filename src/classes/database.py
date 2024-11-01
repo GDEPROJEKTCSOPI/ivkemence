@@ -2,7 +2,7 @@ import sqlite3
 import pandas as pd
 
 
-class DatabaseManager:
+class Database:
 
     # Konstruktor ami az adatbázis kapcsolatot létrehozza
     def __init__(self, database_file):

@@ -1,16 +1,15 @@
-from src.classes.database_manager import DatabaseManager
-
-DB_PATH = 'database/ivkemence.db'
+from src.classes.database_instance import db
+from src.classes.database_manipulation import *
+from src.classes.menu import Menu
 
 # Főprogram indítás
 
-# Adatbázis objektum inicializálás
-db_connection = DatabaseManager(database_file=DB_PATH)
+Menu().cmdloop()
 
-df = db_connection.query("SELECT * FROM adagok;")
+#insert_example()
 
+#df = db.query("SELECT * FROM homerseklet WHERE datumido LIKE date() || '%';")
 
-if df is not None:
-    print(df)
+#print(df)
 
-db_connection.close()
+#db.close()
