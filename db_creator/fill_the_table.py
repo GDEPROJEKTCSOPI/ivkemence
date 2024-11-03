@@ -1,9 +1,15 @@
 import sqlite3
+import os
 import pandas as pd
 from datetime import datetime
 
 # Adatbázis létrehozása és csatlakozás
-db_path = r'output/ivkemence.db'
+folder_path='output'
+db_path = os.path.join(folder_path, 'ivkemence.db')
+
+if not os.path.exists(folder_path):
+    os.makedirs(folder_path)
+
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
