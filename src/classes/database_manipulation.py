@@ -8,32 +8,44 @@ def insert_temperature_data(hutopanel_id, adag_id, homerseklet):
         SELECT *
         FROM 
         (SELECT COUNT(hutopanel_id) FROM hutopanelek WHERE hutopanel_id = ''' + hutopanel_id +'''),
-        (SELECT COUNT(adag_id) FROM adagok WHERE adag_id = ''' + adag_id + ''')
-        ;
+        (SELECT COUNT(adag_id) FROM adagok WHERE adag_id = ''' + adag_id + ''');
     ''')
 
-    if df.at[0, "COUNT(hutopanel_id)"] < 1:
-        print("Nem található ilyen hűtőpanel azonosító az adatbázisban")
-        return
+    if df is not None:
+        if df.at[0, "COUNT(hutopanel_id)"] < 1:
+            print("Nem található ilyen hűtőpanel azonosító az adatbázisban")
+            return
 
-    if df.at[0, "COUNT(adag_id)"] < 1:
-        print("Nem található ilyen adag azonosító az adatbázisban")
-        return
+        if df.at[0, "COUNT(adag_id)"] < 1:
+            print("Nem található ilyen adag azonosító az adatbázisban")
+            return
 
-    db.execute('''
-        INSERT INTO homerseklet 
-	        (hutopanel_id, adag_id, datumido, homerseklet)
-        VALUES 
-	        (''' + hutopanel_id + ''', ''' + adag_id + ''', datetime(), ''' + homerseklet + ''');
-	''')
-
-
-def update_example():
-    pass
+        db.execute('''
+            INSERT INTO homerseklet 
+                (hutopanel_id, adag_id, datumido, homerseklet)
+            VALUES 
+                (''' + hutopanel_id + ''', ''' + adag_id + ''', datetime(), ''' + homerseklet + ''');
+        ''')
 
 
-def delete_example():
-    pass
+def update_temperature_data(id, homerseklet):
+    print('Hőmérsékleti adat felülírása...')
+
+    df = db.query('''
+        SELECT COUNT(id) FROM homerseklet WHERE id = ''' + id + ''';
+    ''')
+
+    if df is not None:
+        if df.at[0, "COUNT(id)"] < 1:
+            print("Nem található ilyen azonosító az adabázisban")
+            return
+
+        db.execute('''
+            UPDATE homerseklet
+            SET homerseklet = ''' + homerseklet + '''
+            WHERE id = ''' + id + '''
+        ''')
+
 
 def delete_temperature_data(hutopanel_id, adag_id):
     """

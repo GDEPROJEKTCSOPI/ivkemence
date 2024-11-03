@@ -17,16 +17,28 @@ class Database:
     # Eljárás commitolni való SQL utasításokhoz (INSERT, UPDATE, DELETE)
     def execute(self, sql: str):
         try:
-            self.db_connection.cursor().execute(sql)
+            cursor = self.db_connection.cursor()
+            cursor.execute(sql)
+
             self.db_connection.commit()
+
+            print("Érintett sorok száma: " + str(cursor.rowcount))
+
+            cursor.close()
         except Exception as e:
             print(e)
 
     # Eljárás commintolni való tömeges SQL utasításokhoz (INSERT, UPDATE, DELETE)
     def execute_many(self, sql: str, data: list):
         try:
-            self.db_connection.cursor().executemany(sql, data)
+            cursor = self.db_connection.cursor()
+            cursor.executemany(sql, data)
+
             self.db_connection.commit()
+
+            print("Érintett sorok száma: " + str(cursor.rowcount))
+
+            cursor.close()
         except Exception as e:
             print(e)
 

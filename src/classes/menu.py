@@ -2,8 +2,7 @@ import cmd
 
 from src.classes import utils
 from src.classes.database_instance import db
-from src.classes.database_manipulation import delete_temperature_data
-from src.classes.database_manipulation import insert_temperature_data
+from src.classes.database_manipulation import insert_temperature_data, update_temperature_data, delete_temperature_data
 
 
 class Menu(cmd.Cmd):
@@ -12,7 +11,7 @@ class Menu(cmd.Cmd):
         Kérlek válassz az elérhető parancsok közül
         ------------------------------------------
             > insert_temp <panel_id> <adag_id> <homerseklet>                |   Hőmérsékleti adat beszúrása az adatbázisba 
-            
+            > update_temp <id> <uj_homerseklet>                             |   Hőmérsékleti adat módosítása az adatbázisban
             > delete_temp <panel_id> <adag_id>                              |   Adat törlése adag és panel id alapján
             > help <parancs>                                                |   Segítséget nyújt a parancsok használatához
             > exit                                                          |   Kilépés
@@ -22,7 +21,7 @@ class Menu(cmd.Cmd):
 
     def do_insert_temp(self, arg):
         """
-        Tetszőleges hőmérséklet adat beszúrása az adatbázisba.
+        Tetszőleges hőmérséklet érték beszúrása az adatbázisba.
         A parancs a jelenlegi dátumot és időt rendeli a bejegyzéshez.
 
         Szintaxis:
@@ -30,18 +29,39 @@ class Menu(cmd.Cmd):
             adag_id: Az adag azonosítója
             homerseklet: A hőmérsékleti érték
 
-        Példa: insert_data 5 32 44.3
+        Példa: insert_temp 5 32 44.3
         """
 
         args = arg.split()
 
         # Bemenet ellenőrzés
-        # Legalább 3 paraméter megadása szükséges és adattípus ellenőrzés
-        if (len(args) < 3) or (not utils.is_int(args[0]) or not utils.is_int(args[1]) or not utils.is_float(args[2])):
+        # 3 paraméter megadása szükséges és adattípus ellenőrzés
+        if (len(args) != 3) or (not utils.is_int(args[0]) or not utils.is_int(args[1]) or not utils.is_float(args[2])):
             cmd.Cmd.do_help(self,"insert_temp")
             return
 
         insert_temperature_data(args[0], args[1], args[2])
+
+    def do_update_temp(self, arg):
+        """
+        Adatbázisban már meglévő hőmérsékleti adat módosítása.
+
+        Szintaxis:
+            id: A "homerseklet" táblában a rekordhoz tartozó id
+            homerseklet: Az új hőmérsékleti érték
+
+        Példa: update_temp 12331 64
+        """
+
+        args = arg.split()
+
+        # Bemenet ellenőrzés
+        # Legalább 2 paraméter megadása szükséges és adattípus ellenőrzés
+        if (len(args) != 2) or (not utils.is_int(args[0]) or not utils.is_float(args[1])):
+            cmd.Cmd.do_help(self,"update_temp")
+            return
+
+        update_temperature_data(args[0], args[1])
 
     def do_delete_temp(self, arg):
         """
