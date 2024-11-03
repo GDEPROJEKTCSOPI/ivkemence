@@ -19,7 +19,7 @@ class Panel:
     def get_med(self):  return self.med
     def get_mod(self):  return self.mod
 
-eleresiut = r'C:\Users\kiku0\Desktop\adatbazis\ivkemence.db'
+eleresiut = r'db_creator/output/ivkemence.db'
 conn = sqlite3.connect(eleresiut)
 
 lekerdezes1 = '''
