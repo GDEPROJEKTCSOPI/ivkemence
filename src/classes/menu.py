@@ -1,7 +1,10 @@
 import cmd
-from src.classes.database_instance import db
-from src.classes.database_manipulation import insert_temperature_data
+
 from src.classes import utils
+from src.classes.database_instance import db
+from src.classes.database_manipulation import delete_temperature_data
+from src.classes.database_manipulation import insert_temperature_data
+
 
 class Menu(cmd.Cmd):
     intro   =   """
@@ -10,6 +13,7 @@ class Menu(cmd.Cmd):
         ------------------------------------------
             > insert_temp <panel_id> <adag_id> <homerseklet>                |   Hőmérsékleti adat beszúrása az adatbázisba 
             
+            > delete_temp <panel_id> <adag_id>                              |   Adat törlése adag és panel id alapján
             > help <parancs>                                                |   Segítséget nyújt a parancsok használatához
             > exit                                                          |   Kilépés
         ------------------------------------------
@@ -38,6 +42,24 @@ class Menu(cmd.Cmd):
             return
 
         insert_temperature_data(args[0], args[1], args[2])
+
+    def do_delete_temp(self, arg):
+        """
+        Hőmérsékleti adat törlése az adatbázisból.
+        Szintaxis:
+            delete_temp <panel_id> <adag_id> - konkrét adat törlése id alapján
+        """
+        args = arg.split()
+
+        # Ellenőrizzük, hogy pontosan 2 argumentumot kaptunk
+        if len(args) != 2:
+            self.do_help("delete_temp")
+            return
+
+        if utils.is_int(args[0]) and utils.is_int(args[1]):
+             delete_temperature_data(args[0], args[1])  # Törlési funkció
+        else:
+            print("Hibás bemeneti értékek, győződj meg róla, hogy az azonosítók számok.")
 
 
     def do_exit(self, arg=None):
