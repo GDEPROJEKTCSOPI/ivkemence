@@ -69,6 +69,9 @@ data1 = pd.read_sql_query(lekerdezes_data1, conn)
 lekerdezes_data2 = 'SELECT CAST("Panel hőfok 2 [°C] ValueY" AS REAL) AS hofok2 FROM hutopanelek;'
 data2 = pd.read_sql_query(lekerdezes_data2, conn)
 
+lekerdezes3 = 'SELECT * FROM hutopanelek'
+teljesTabla = pd.read_sql_query(lekerdezes3, conn)
+
 conn.close()
 
 # Panel 1 hőfokok statisztika 
@@ -108,14 +111,10 @@ ypoints2 = np.array(data2['hofok2'])
 plt.plot(ypoints1, color='r', label='Panel 1 Hőfok')
 plt.plot(ypoints2, color='b', label='Panel 2 Hőfok')  
 
-plt.axhline(y=panel1.get_min(), color='r', linestyle='--', label='Panel 1 minimum hőfoka')
-plt.axhline(y=panel1.get_max(), color='r', linestyle='--', label='Panel 1 maximális hőfoka')
 plt.axhline(y=panel1.get_avg(), color='r', linestyle='--', label='Panel 1 átlagos hőfoka')
 plt.axhline(y=panel1.get_med(), color='r', linestyle=':', label='Panel 1 hőfokának mediánja')
 plt.axhline(y=panel1.get_mod(), color='r', linestyle='-.', label='Panel 1 hőfokának módusza')
 
-plt.axhline(y=panel2.get_min(), color='b', linestyle='--', label='Panel 2 Minimum hőfoka')
-plt.axhline(y=panel2.get_max(), color='b', linestyle='--', label='Panel 2 maximális hőfoka')
 plt.axhline(y=panel2.get_avg(), color='b', linestyle='--', label='Panel 2 átlagos hőfoka')
 plt.axhline(y=panel2.get_med(), color='b', linestyle=':', label='Panel 2 hőfokának mediánja')
 plt.axhline(y=panel2.get_mod(), color='b', linestyle='-.', label='Panel 2 hőfokának módusza')
@@ -133,6 +132,10 @@ plt.show()
 #print(f"Min: {panel1.get_min():.2f} °C, Max: {panel1.get_max():.2f} °C, Avg: {panel1.get_avg():.2f} °C, Median: {panel1.get_med():.2f} °C, Mode: {panel1.get_mod():.2f} °C")
 #print("\nPanel 2 Statisztikák:")
 #print(f"Min: {panel2.get_min():.2f} °C, Max: {panel2.get_max():.2f} °C, Avg: {panel2.get_avg():.2f} °C, Median: {panel2.get_med():.2f} °C, Mode: {panel2.get_mod():.2f} °C")
+#print("\nDATA1 kiiratása:")
+#print(data1)
+#print("\nDATA2 kiiratása:")
+#print(data2)
 #print("\nDATA1 kiiratása:")
 #print(data1)
 #print("\nDATA2 kiiratása:")
