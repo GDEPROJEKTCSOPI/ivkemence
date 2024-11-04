@@ -4,7 +4,7 @@ from src.classes.database_instance import db
 from src.classes.queries import one_panel_query, two_panel_query, all_panel_query
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
+import time
 
 
 def display_panel(df,adag_id=None,panel_id=None,adag_id_2=None,panel_id_2=None):
@@ -15,7 +15,7 @@ def display_panel(df,adag_id=None,panel_id=None,adag_id_2=None,panel_id_2=None):
         df['datumido'] = pd.to_datetime(df['datumido'])
 
         # Ha csak adag_id van, akkor minden panel hőmérsékletét folyamatos vonallal jelenítjük meg
-        if panel_id_2 is None:
+        if panel_id_2 is None and panel_id is None:
             unique_panels = df['hutopanel_id'].unique()
             colors = plt.cm.get_cmap('tab10', len(unique_panels))  # Különböző színek
 
@@ -27,7 +27,18 @@ def display_panel(df,adag_id=None,panel_id=None,adag_id_2=None,panel_id_2=None):
             plt.title(f'{adag_id}. adag hőmérséklete - Összes panel')
 
         # Ha van adag_id és hutopanel_id, megjelenítjük a mediánt, móduszt és átlagot
-        elif panel_id is not None:
+        elif panel_id_2 is not None and panel_id is not None:
+            unique_panels = df['hutopanel_id'].unique()
+            colors = plt.cm.get_cmap('tab10', len(unique_panels))
+
+            for idx, panel in enumerate(unique_panels):
+                panel_data = df[df['hutopanel_id'] == panel]
+                plt.plot(panel_data['datumido'], panel_data['homerseklet'],
+                         color=colors(idx), label=f'{panel} panel hőmérséklete')
+
+            plt.title(f'{adag_id}. adag hőmérséklete {panel_id} és {panel_id_2} paneleken - Összes panel')
+
+        elif panel_id_2 is None and panel_id is not None:
 
             plt.plot(df['datumido'], df['homerseklet'], color='b',
                      label=f'{panel_id} panel hőmérséklete')
@@ -51,7 +62,7 @@ def display_panel(df,adag_id=None,panel_id=None,adag_id_2=None,panel_id_2=None):
         plt.tight_layout()
 
         # Kép mentése teljes képernyővel
-        plt.savefig(os.path.join(r'../db_creator/output', f'adag_{adag_id}_panelek_homerseklet.png'),
+        plt.savefig(os.path.join(r'../db_creator/output', f'{time.time()}_adag_{adag_id}_panelek_homerseklet.png'),
                     bbox_inches='tight', dpi=300)
         plt.show()
     else:
@@ -90,12 +101,11 @@ def show_panel():
 
 
 def show_two_panel():
-    panel_id = input("Kérjük, adja meg a hutopanel_id-t:")
     adag_id = input("Kérjük, adja meg az adag_id-t:")
+    panel_id = input("Kérjük, adja meg a hutopanel_id-t:")
     panel_id_2 = input("Kérjük, adja meg a másik hutopanel_id-t:")
-    adag_id_2 = input("Kérjük, adja meg a másik adag_id-t:")
 
-    query_temperature_data_use(adag_id, panel_id, adag_id_2, panel_id_2)
+    query_temperature_data_use(adag_id, panel_id, adag_id, panel_id_2)
     print('két panel bemutatása')
 
 
