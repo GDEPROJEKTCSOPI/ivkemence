@@ -10,6 +10,9 @@ class Menu(cmd.Cmd):
         IVKEMENCE adatbázis kezelő
         Kérlek válassz az elérhető parancsok közül
         ------------------------------------------
+            > get_portion_data                                              |   Elérhető adag adatok listázása
+            > get_panel_data                                                |   Elérhető hűtőpanel adatok listázása
+            > get_temperature_data <panel_id> <adag_id                      |   Elérhető hőmérséklet adatok listázása
             > insert_temp <panel_id> <adag_id> <homerseklet>                |   Hőmérsékleti adat beszúrása az adatbázisba 
             > update_temp <id> <uj_homerseklet>                             |   Hőmérsékleti adat módosítása az adatbázisban
             > delete_temp <panel_id> <adag_id>                              |   Adat törlése adag és panel id alapján

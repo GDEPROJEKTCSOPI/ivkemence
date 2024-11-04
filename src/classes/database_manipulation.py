@@ -1,5 +1,49 @@
 from src.classes.database_instance import db
 
+def query_temperature_data(hutopanel_id,adag_id):
+    print('Hömérsékleti adatok lekérdezése')
+
+    df=db.query('''
+        SELECT * 
+        FROM homerseklet
+        WHERE adag_id = ? AND hutopanel_id = ?        
+    ''',(adag_id,hutopanel_id))
+
+    if df is not None and not df.empty:
+        print("Lekérdezett hőmérsékleti adatok:")
+        print(df)
+    else:
+        print("Nem található ilyen hűtőpanel vagy adag azonosító az adatbázisban.")
+
+def query_panel_data():
+    print('Elérhető panel adatok lekérdezése')
+
+    df=db.query('''
+        SELECT * 
+        FROM hutopanelek
+    ''')
+
+    if df is not None and not df.empty:
+        print("Lekérdezhető panelek:")
+        print(df)
+    else:
+        print("Nem található ilyen hűtőpanel az adatbázisban.")
+
+def query_portion_data():
+    print('Elérhető adag adatok lekérdezése')
+
+    df=db.query('''
+        SELECT DISTINCT hutopanel_id 
+        FROM homersekletek
+        INNER JOIN adagok
+        ON homersekletek.adag_id = adagok.adag_id
+    ''')
+
+    if df is not None and not df.empty:
+        print("Lekérdezhető adagok:")
+        print(df)
+    else:
+        print("Nem található ilyen adagra vonatkozó adat az adatbázisban.")
 
 def insert_temperature_data(hutopanel_id, adag_id, homerseklet):
     print('Hőmérsékleti adatok beszúrása...')
