@@ -1,19 +1,23 @@
 from src.classes.database_instance import db
 
-def query_temperature_data(hutopanel_id,adag_id):
-    print('Hömérsékleti adatok lekérdezése')
 
-    df=db.query('''
-        SELECT * 
-        FROM homerseklet
-        WHERE adag_id = ? AND hutopanel_id = ?        
-    ''',(adag_id,hutopanel_id))
+def query_portion_data():
+    print('Elérhető adag adatok lekérdezése')
 
-    if df is not None and not df.empty:
-        print("Lekérdezett hőmérsékleti adatok:")
-        print(df)
-    else:
-        print("Nem található ilyen hűtőpanel vagy adag azonosító az adatbázisban.")
+    try:
+        df = db.query('''
+            SELECT DISTINCT adag_id, start_datetime, end_datetime
+            FROM adagok
+        ''')
+
+        if df is not None and not df.empty:
+            print("Lekérdezhető adagok:")
+            print(df)
+        else:
+            print("Nem található adat.")
+
+    except Exception as e:
+        print("Hiba történt a lekérdezés során:", e)
 
 def query_panel_data():
     print('Elérhető panel adatok lekérdezése')
@@ -29,21 +33,24 @@ def query_panel_data():
     else:
         print("Nem található ilyen hűtőpanel az adatbázisban.")
 
-def query_portion_data():
-    print('Elérhető adag adatok lekérdezése')
+def query_temperature_data(hutopanel_id, adag_id):
+    print('Hömérsékleti adatok lekérdezése')
 
-    df=db.query('''
-        SELECT DISTINCT hutopanel_id 
-        FROM homersekletek
-        INNER JOIN adagok
-        ON homersekletek.adag_id = adagok.adag_id
-    ''')
+    try:
+        df = db.query('''
+            SELECT * 
+            FROM homerseklet
+            WHERE hutopanel_id = ? AND adag_id = ?        
+        ''', (hutopanel_id, adag_id))
 
-    if df is not None and not df.empty:
-        print("Lekérdezhető adagok:")
-        print(df)
-    else:
-        print("Nem található ilyen adagra vonatkozó adat az adatbázisban.")
+        if df is not None and not df.empty:
+            print("Lekérdezett hőmérsékleti adatok:")
+            print(df)
+        else:
+            print("Nem található ilyen hűtőpanel vagy adag azonosító az adatbázisban.")
+
+    except Exception as e:
+        print("Hiba történt a lekérdezés során:", e)
 
 def insert_temperature_data(hutopanel_id, adag_id, homerseklet):
     print('Hőmérsékleti adatok beszúrása...')

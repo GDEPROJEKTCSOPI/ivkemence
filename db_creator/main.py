@@ -7,11 +7,9 @@ futtatas = [
     'filter_the_data.py'
 ]
 
-
 # műveletek feldolgása
 # adatok feldolgása
 # add line to make changes
-
 
 for file in futtatas:
     print(f"Running {file}...")

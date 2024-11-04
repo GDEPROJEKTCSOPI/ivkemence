@@ -1,9 +1,20 @@
 import pandas as pd
 import sqlite3
+import sys
+import os
 
 db_path = r'output/ivkemence.db'
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
+
+# Adatbázis létrehozása és csatlakozás
+folder_path='output'
+db_path = os.path.join(folder_path, 'ivkemence.db')
+
+# Ellenőrizzük, hogy az adatbázis fájl már létezik-e
+if os.path.exists(db_path):
+    print("A 'ivkemence.db' fájl már létezik. A szűrési folyamat megszakítva.")
+    sys.exit()  # Kilépés a szkriptből
 
 kuszob = 70
 
