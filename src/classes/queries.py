@@ -14,7 +14,7 @@ panel_query = '''
         FROM hutopanelek
     '''
 
-panel_query = '''
+one_panel_query = '''
             SELECT h.*, a.*
             FROM homerseklet h
             JOIN adagok a ON h.adag_id = a.adag_id
@@ -25,19 +25,19 @@ two_panel_query = '''
             SELECT h.*, a.*
             FROM homerseklet h
             JOIN adagok a ON h.adag_id = a.adag_id
-            WHERE h.adag_id = ? AND a.idotartam < 120 AND h.hutopanel_id = ?    
+            WHERE h.adag_id = ? AND h.hutopanel_id = ?    
         
             UNION
         
             SELECT h.*, a.*
             FROM homerseklet h
             JOIN adagok a ON h.adag_id = a.adag_id
-            WHERE h.adag_id = ? AND a.idotartam < 120 AND h.hutopanel_id = ?   
+            WHERE h.adag_id = ? AND h.hutopanel_id = ?   
         '''
 
 all_panel_query = '''
             SELECT h.*, a.*
             FROM homerseklet h
             JOIN adagok a ON h.adag_id = a.adag_id
-            WHERE h.adag_id = ? AND a.idotartam < 120 
+            WHERE h.adag_id = ? 
         '''

@@ -7,15 +7,6 @@ db_path = r'output/ivkemence.db'
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
-# Adatbázis létrehozása és csatlakozás
-folder_path='output'
-db_path = os.path.join(folder_path, 'ivkemence.db')
-
-# Ellenőrizzük, hogy az adatbázis fájl már létezik-e
-if os.path.exists(db_path):
-    print("A 'ivkemence.db' fájl már létezik. A szűrési folyamat megszakítva.")
-    sys.exit()  # Kilépés a szkriptből
-
 kuszob = 70
 
 cursor.execute('''
@@ -24,7 +15,7 @@ cursor.execute('''
 ''')
 valid_combinations = cursor.fetchall()
 
-log_file_path = "torolt_rekordok.txt"
+log_file_path = "output/torolt_rekordok.txt"
 with open(log_file_path, "w") as log_file:
     log_file.write("Törölt rekordok\n")
     log_file.write("=" * 40 + "\n")
