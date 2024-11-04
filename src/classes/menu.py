@@ -2,8 +2,9 @@ import cmd
 
 from src.classes import utils
 from src.classes.database_instance import db
-from src.classes.database_manipulation import insert_temperature_data, update_temperature_data, delete_temperature_data,query_temperature_data,query_portion_data,query_panel_data
-
+from src.classes.database_manipulation import insert_temperature_data, update_temperature_data, delete_temperature_data
+from src.classes.database_query import query_temperature_data,query_portion_data,query_panel_data
+from src.classes.database_process import show_panel,show_two_panel,show_all_panel
 
 class Menu(cmd.Cmd):
     intro   =   """
@@ -16,6 +17,9 @@ class Menu(cmd.Cmd):
             > insert_temp <panel_id> <adag_id> <homerseklet>                |   Hőmérsékleti adat beszúrása az adatbázisba 
             > update_temp <id> <uj_homerseklet>                             |   Hőmérsékleti adat módosítása az adatbázisban
             > delete_temp <panel_id> <adag_id>                              |   Adat törlése adag és panel id alapján
+            > show_panel                                                    |   Egy panelhez és adaghoz tartozó hőmérsékletek megjelenítése grafikonon
+            > show_panels                                                   |   Egy adaghoz tartozó két panel adatainak megjelenítése
+            > show_all_panels                                               |   Egy adaghoz tartozó összes panel adatainak megjelenítése
             > help <parancs>                                                |   Segítséget nyújt a parancsok használatához
             > exit                                                          |   Kilépés
         ------------------------------------------
@@ -26,9 +30,11 @@ class Menu(cmd.Cmd):
     def do_get_portion_data(self, arg):
         query_portion_data()
 
+    # Panelek adatainek lekérdezése
     def do_get_panel_data (self, arg):
         query_panel_data()
 
+    # Hőmérsékletek lekérdezése panel és adag szerint
     def do_get_temperature_data(self, arg):
 
         args = arg.split()
@@ -101,6 +107,13 @@ class Menu(cmd.Cmd):
         else:
             print("Hibás bemeneti értékek, győződj meg róla, hogy az azonosítók számok.")
 
+    def do_show_panel(self,arg):
+        show_panel()
+    def do_show_panels(self,arg):
+        show_two_panel()
+
+    def do_show_all_panels(self,arg):
+        show_all_panel()
 
     def do_exit(self, arg=None):
         """
