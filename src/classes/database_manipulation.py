@@ -47,34 +47,35 @@ def update_temperature_data(id, homerseklet):
         ''')
 
 
-def delete_temperature_data(hutopanel_id, adag_id):
+def delete_temperature_data(id):
     """
-    Törli a hőmérsékleti adatot az adatbázisból a megadott hutopanel_id és adag_id alapján.
+    Törli a hőmérsékleti adatot az adatbázisból a megadott id alapján.
     Visszatérési érték: True, ha a törlés sikeres volt, különben False.
     """
     try:
-        # Hűtőpanel és adag azonosítók létezésének ellenőrzése
+        # Id létezésének ellenőrzése
         df = db.query('''
-            SELECT COUNT(*) as count 
+            SELECT COUNT(id) as count 
             FROM homerseklet 
-            WHERE hutopanel_id = ''' + hutopanel_id + ''' AND adag_id = ''' + adag_id + ''';
+            WHERE id = ''' + id + ''';
         ''')
 
         if df.at[0, "count"] < 1:
-            print("Nincs törölhető adat a megadott azonosítókkal.")
+            print("Nincs törölhető adat a megadott azonosítóval.")
             return False
 
         # Törlés végrehajtása
         db.execute('''
             DELETE FROM homerseklet 
-            WHERE hutopanel_id = ''' + hutopanel_id + ''' AND adag_id = ''' + adag_id + ''';
+            WHERE id = ''' + id + ''';
         ''')
 
-        # Sikeres törlés üzenet kiírása itt, a törlés után
+        # Sikeres törlés üzenet kiírása, ha a törlés megtörtént
         print("A megadott hőmérsékleti adat sikeresen törölve.")
         return True
 
     except Exception as e:
         print(f"Hiba történt a törlés során: {e}")
         return False
+
 

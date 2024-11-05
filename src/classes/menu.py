@@ -12,7 +12,7 @@ class Menu(cmd.Cmd):
         ------------------------------------------
             > insert_temp <panel_id> <adag_id> <homerseklet>                |   Hőmérsékleti adat beszúrása az adatbázisba 
             > update_temp <id> <uj_homerseklet>                             |   Hőmérsékleti adat módosítása az adatbázisban
-            > delete_temp <panel_id> <adag_id>                              |   Adat törlése adag és panel id alapján
+            > delete_temp <id>                                              |   Hőmérsékleti adat törlése az adatbázisban
             > help <parancs>                                                |   Segítséget nyújt a parancsok használatához
             > exit                                                          |   Kilépés
         ------------------------------------------
@@ -65,22 +65,24 @@ class Menu(cmd.Cmd):
 
     def do_delete_temp(self, arg):
         """
-        Hőmérsékleti adat törlése az adatbázisból.
+        Egy hőmérsékleti adat törlése az adatbázisból.
         Szintaxis:
-            delete_temp <panel_id> <adag_id> - konkrét adat törlése id alapján
+            id: A "homerseklet" táblában a rekordhoz tartozó id
+
+        Példa: delete_temp 23134
         """
         args = arg.split()
 
-        # Ellenőrizzük, hogy pontosan 2 argumentumot kaptunk
-        if len(args) != 2:
+        # Ellenőrizzük, hogy pontosan 1 argumentumot kaptunk
+        if len(args) != 1:
             self.do_help("delete_temp")
             return
 
-        if utils.is_int(args[0]) and utils.is_int(args[1]):
-             delete_temperature_data(args[0], args[1])  # Törlési funkció
+        # Ellenőrizzük, hogy az id egész szám-e
+        if utils.is_int(args[0]):
+            delete_temperature_data(args[0])  # Törlési funkció hívása csak id-vel
         else:
-            print("Hibás bemeneti értékek, győződj meg róla, hogy az azonosítók számok.")
-
+            print("Hibás bemeneti érték, győződj meg róla, hogy az azonosító szám.")
 
     def do_exit(self, arg=None):
         """
