@@ -9,7 +9,7 @@ kuszob = 70
 
 cursor.execute('''
     SELECT DISTINCT hutopanel_id, adag_id 
-    FROM Homerseklet
+    FROM homerseklet
 ''')
 valid_combinations = cursor.fetchall()
 
@@ -23,7 +23,7 @@ for hutopanel_id, adag_id in valid_combinations:
 
     cursor.execute('''
               SELECT homerseklet 
-              FROM Homerseklet
+              FROM homerseklet
               WHERE adag_id = ? AND hutopanel_id = ?
           ''', (adag_id, hutopanel_id))
 
@@ -39,7 +39,7 @@ for hutopanel_id, adag_id in valid_combinations:
 
 
     cursor.execute('''
-            SELECT * FROM Homerseklet
+            SELECT * FROM homerseklet
             WHERE (homerseklet < ? OR homerseklet > ?)
             AND adag_id = ? AND hutopanel_id = ?;
         ''', (also_kuszob, felso_kuszob, adag_id, hutopanel_id))
@@ -56,7 +56,7 @@ for hutopanel_id, adag_id in valid_combinations:
            continue
 
     cursor.execute('''
-        DELETE FROM Homerseklet
+        DELETE FROM homerseklet
         WHERE (homerseklet < ? OR homerseklet > ?)
         AND adag_id = ? AND hutopanel_id = ?;
     ''', (also_kuszob, felso_kuszob, adag_id, hutopanel_id))
