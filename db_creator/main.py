@@ -7,13 +7,7 @@ futtatas = [
     'filter_the_data.py'
 ]
 
-
-# műveletek feldolgása
-# adatok feldolgása
-# add line to make changes
-
-
 for file in futtatas:
-    print(f"Running {file}...")
+    print(f"{file} futtatása...")
     subprocess.run(['python', file], check=True)
-    print(f"{file} completed.\n")
+    print(f"{file} befejezve.\n")

@@ -1,5 +1,7 @@
 import pandas as pd
 import sqlite3
+import sys
+import os
 
 db_path = r'output/ivkemence.db'
 conn = sqlite3.connect(db_path)
@@ -13,7 +15,7 @@ cursor.execute('''
 ''')
 valid_combinations = cursor.fetchall()
 
-log_file_path = "torolt_rekordok.txt"
+log_file_path = "output/torolt_rekordok.txt"
 with open(log_file_path, "w") as log_file:
     log_file.write("Törölt rekordok\n")
     log_file.write("=" * 40 + "\n")

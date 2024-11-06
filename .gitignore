@@ -2,8 +2,7 @@
 
 db_creator/csv/hutopanelek_atalakitott.csv
 db_creator/csv/adagok_atalakitott.csv
-ivkemence.db
-torolt_rekordok.txt
+.output/
 .idea/
 .venv/
 .tmp

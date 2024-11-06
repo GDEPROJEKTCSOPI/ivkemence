@@ -43,9 +43,9 @@ class Database:
             print(e)
 
     # Függvény queryhez, ami egy pandas dataframemel tér vissza (SELECT)
-    def query(self, sql: str):
+    def query(self, sql: str, params=None):
         try:
-            return pd.read_sql_query(sql, self.db_connection)
+            return pd.read_sql_query(sql, self.db_connection, params=params)
         except Exception as e:
             print(e)
             return None

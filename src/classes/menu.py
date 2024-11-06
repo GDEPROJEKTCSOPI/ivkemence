@@ -3,21 +3,47 @@ import cmd
 from src.classes import utils
 from src.classes.database_instance import db
 from src.classes.database_manipulation import insert_temperature_data, update_temperature_data, delete_temperature_data
-
+from src.classes.database_query import query_temperature_data,query_portion_data,query_panel_data
+from src.classes.database_process import show_panel,show_two_panel,show_all_panel
 
 class Menu(cmd.Cmd):
     intro   =   """
         IVKEMENCE adatbázis kezelő
         Kérlek válassz az elérhető parancsok közül
         ------------------------------------------
+            > get_portion_data                                              |   Elérhető adag adatok listázása
+            > get_panel_data                                                |   Elérhető hűtőpanel adatok listázása
+            > get_temperature_data <panel_id> <adag_id>                     |   Elérhető hőmérséklet adatok listázása
             > insert_temp <panel_id> <adag_id> <homerseklet>                |   Hőmérsékleti adat beszúrása az adatbázisba 
             > update_temp <id> <uj_homerseklet>                             |   Hőmérsékleti adat módosítása az adatbázisban
             > delete_temp <panel_id> <adag_id>                              |   Adat törlése adag és panel id alapján
+            > show_panel                                                    |   Egy panelhez és adaghoz tartozó hőmérsékletek megjelenítése grafikonon
+            > show_panels                                                   |   Egy adaghoz tartozó két panel adatainak megjelenítése
+            > show_all_panels                                               |   Egy adaghoz tartozó összes panel adatainak megjelenítése
             > help <parancs>                                                |   Segítséget nyújt a parancsok használatához
             > exit                                                          |   Kilépés
         ------------------------------------------
         """
     prompt  = 'IVKEMENCE CLI > '
+
+    # Adagok adatinak lekérdezése az adatbázisból.
+    def do_get_portion_data(self, arg):
+        query_portion_data()
+
+    # Panelek adatainek lekérdezése
+    def do_get_panel_data (self, arg):
+        query_panel_data()
+
+    # Hőmérsékletek lekérdezése panel és adag szerint
+    def do_get_temperature_data(self, arg):
+
+        args = arg.split()
+
+        if len(args) != 2:
+            print("Hiba: Kérjük, pontosan két argumentumot adjon meg: <panel_id> és <adag_id>.")
+            cmd.Cmd.do_help(self, "get_temperature_data")
+            return
+        query_temperature_data(args[0], args[1])
 
     def do_insert_temp(self, arg):
         """
@@ -81,6 +107,13 @@ class Menu(cmd.Cmd):
         else:
             print("Hibás bemeneti értékek, győződj meg róla, hogy az azonosítók számok.")
 
+    def do_show_panel(self,arg):
+        show_panel()
+    def do_show_panels(self,arg):
+        show_two_panel()
+
+    def do_show_all_panels(self,arg):
+        show_all_panel()
 
     def do_exit(self, arg=None):
         """

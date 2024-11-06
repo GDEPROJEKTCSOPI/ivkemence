@@ -1,11 +1,17 @@
 import sqlite3
 import os
 import pandas as pd
+import sys
 from datetime import datetime
 
 # Adatbázis létrehozása és csatlakozás
 folder_path='output'
 db_path = os.path.join(folder_path, 'ivkemence.db')
+
+# Ellenőrizzük, hogy az adatbázis fájl már létezik-e
+if os.path.exists(db_path):
+    print("A 'ivkemence.db' fájl már létezik. A folyamat megszakítva.")
+    sys.exit()  # Kilépés a szkriptből
 
 if not os.path.exists(folder_path):
     os.makedirs(folder_path)

@@ -1,6 +1,5 @@
 from src.classes.database_instance import db
 
-
 def insert_temperature_data(hutopanel_id, adag_id, homerseklet):
     print('Hőmérsékleti adatok beszúrása...')
 
