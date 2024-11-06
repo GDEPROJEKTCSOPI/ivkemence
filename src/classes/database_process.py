@@ -24,8 +24,9 @@ def display_panel(df,adag_id=None,panel_id=None,panel_id_2=None):
                 plt.plot(panel_data['datumido'], panel_data['homerseklet'],
                          color=colors(idx), label=f'{panel} panel hőmérséklete')
 
-            plt.title(f'Összes panel')
-            file_suffix = f"osszes"
+            plt.title(f'{adag_id}. adag hőmérséklete az összes panelen')
+
+            file_suffix = f"osszes_panel_{adag_id}_adag"
 
 
         elif panel_id_2 is not None and panel_id is not None:
@@ -37,7 +38,7 @@ def display_panel(df,adag_id=None,panel_id=None,panel_id_2=None):
                 plt.plot(panel_data['datumido'], panel_data['homerseklet'],
                          color=colors(idx), label=f'{panel} panel hőmérséklete')
 
-            plt.title(f'{adag_id}. adag hőmérséklete {panel_id} és {panel_id_2} paneleken - Összes panel')
+            plt.title(f'{adag_id}. adag hőmérséklete {panel_id} és a {panel_id_2} paneleken')
             file_suffix = f"{adag_id}_adag_{panel_id}_es_{panel_id_2}_panelek"
 
         elif panel_id_2 is None and panel_id is not None:
@@ -53,8 +54,16 @@ def display_panel(df,adag_id=None,panel_id=None,panel_id_2=None):
             plt.axhline(y=median_temp, color='green', linestyle='--', label='Medián')
             plt.axhline(y=mode_temp, color='purple', linestyle='--', label='Módusz')
 
-            plt.title(f'{adag_id}. adag hőmérséklete a {panel_id}. panelen')
-            file_suffix = f"{adag_id}_adag_{panel_id}_panel"
+
+
+            if adag_id is not None:
+                plt.title(f'{adag_id}. adag hőmérséklete a {panel_id}. panelen')
+                file_suffix = f"{adag_id}_adag_{panel_id}_panel"
+            elif adag_id is None:
+                plt.title(f'Összes adag hőmérséklete a {panel_id}. panelen')
+                file_suffix = f"osszes_adag_{panel_id}_panel"
+            else:
+                file_suffix = "unknown_case"
 
 
         plt.xlabel("Idő")
@@ -72,23 +81,23 @@ def display_panel(df,adag_id=None,panel_id=None,panel_id_2=None):
     else:
         print("Nem található ilyen hűtőpanel vagy adag azonosító az adatbázisban.")
 
-def query_temperature_data_use(adag_id, *args):
+def query_temperature_data_use(*args):
     print('.....Hömérsékleti adatok lekérdezése.....')
 
     df = None
 
     try:
-        if len(args) == 0:
-            df = db.query(all_panel_query, (adag_id,))
-            display_panel(df, adag_id)
+        if len(args) == 1:
+            df = db.query(all_panel_query, (args[0],))
+            display_panel(df, adag_id=args[0])
 
-        elif len(args) == 1:
-            df = db.query(one_panel_query, (adag_id, args[0]))
-            display_panel(df, adag_id, args[0])
+        elif len(args) == 2:
+            df = db.query(one_panel_query, (args[0], args[1]))
+            display_panel(df, adag_id=args[0], panel_id=args[1])
 
         elif len(args) == 3:
-            df = db.query(two_panel_query, (adag_id, args[0],adag_id, args[1]))
-            display_panel(df, adag_id, args[0], args[1])
+            df = db.query(two_panel_query, (args[0], args[1],args[0], args[2]))
+            display_panel(df, adag_id=args[0], panel_id=args[1], panel_id_2=args[2])
         else:
             print("Túl sok argumentumot adtál meg.")
 
@@ -109,7 +118,7 @@ def show_two_panel():
     panel_id = input("Kérjük, adja meg a hutopanel_id-t:")
     panel_id_2 = input("Kérjük, adja meg a másik hutopanel_id-t:")
 
-    query_temperature_data_use(adag_id, panel_id, adag_id, panel_id_2)
+    query_temperature_data_use(adag_id, panel_id, panel_id_2)
     print('két panel bemutatása')
 
 
@@ -126,7 +135,7 @@ def show_all_portion():
 
     try:
         df = db.query(all_portion_query, (panel_id,))
-        display_panel(df, panel_id)
+        display_panel(df, panel_id=panel_id)
 
     except Exception as e:
         print("Hiba történt a lekérdezés során:", e)
