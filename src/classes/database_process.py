@@ -24,9 +24,10 @@ def display_panel(df,adag_id=None,panel_id=None,panel_id_2=None):
                 plt.plot(panel_data['datumido'], panel_data['homerseklet'],
                          color=colors(idx), label=f'{panel} panel hőmérséklete')
 
-            plt.title(f'{adag_id}. adag hőmérséklete - Összes panel')
+            plt.title(f'Összes panel')
+            file_suffix = f"osszes"
 
-        # Ha van adag_id és hutopanel_id, megjelenítjük a mediánt, móduszt és átlagot
+
         elif panel_id_2 is not None and panel_id is not None:
             unique_panels = df['hutopanel_id'].unique()
             colors = plt.cm.get_cmap('tab10', len(unique_panels))
@@ -37,6 +38,7 @@ def display_panel(df,adag_id=None,panel_id=None,panel_id_2=None):
                          color=colors(idx), label=f'{panel} panel hőmérséklete')
 
             plt.title(f'{adag_id}. adag hőmérséklete {panel_id} és {panel_id_2} paneleken - Összes panel')
+            file_suffix = f"{adag_id}_adag_{panel_id}_es_{panel_id_2}_panelek"
 
         elif panel_id_2 is None and panel_id is not None:
 
@@ -52,6 +54,7 @@ def display_panel(df,adag_id=None,panel_id=None,panel_id_2=None):
             plt.axhline(y=mode_temp, color='purple', linestyle='--', label='Módusz')
 
             plt.title(f'{adag_id}. adag hőmérséklete a {panel_id}. panelen')
+            file_suffix = f"{adag_id}_adag_{panel_id}_panel"
 
 
         plt.xlabel("Idő")
@@ -62,9 +65,10 @@ def display_panel(df,adag_id=None,panel_id=None,panel_id_2=None):
         plt.tight_layout()
 
         # Kép mentése teljes képernyővel
-        plt.savefig(os.path.join(r'../db_creator/output', f'{time.time()}_{}_{adag_id || panel_id}_panelek_homerseklet.png'),
+        plt.savefig(os.path.join(r'../db_creator/output', f'{time.time()}_{file_suffix}_homerseklet.png'),
                     bbox_inches='tight', dpi=300)
         plt.show()
+
     else:
         print("Nem található ilyen hűtőpanel vagy adag azonosító az adatbázisban.")
 
@@ -83,8 +87,8 @@ def query_temperature_data_use(adag_id, *args):
             display_panel(df, adag_id, args[0])
 
         elif len(args) == 3:
-            df = db.query(two_panel_query, (adag_id, args[0], args[1], args[2]))
-            display_panel(df, adag_id, args[0], args[1], args[2])
+            df = db.query(two_panel_query, (adag_id, args[0],adag_id, args[1]))
+            display_panel(df, adag_id, args[0], args[1])
         else:
             print("Túl sok argumentumot adtál meg.")
 
