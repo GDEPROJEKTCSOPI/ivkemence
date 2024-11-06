@@ -1,13 +1,13 @@
 import os.path
 
 from src.classes.database_instance import db
-from src.classes.queries import one_panel_query, two_panel_query, all_panel_query
+from src.classes.queries import one_panel_query, two_panel_query, all_panel_query,all_portion_query
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
 
 
-def display_panel(df,adag_id=None,panel_id=None,adag_id_2=None,panel_id_2=None):
+def display_panel(df,adag_id=None,panel_id=None,panel_id_2=None):
     if df is not None and not df.empty:
         print("Lekérdezett hőmérsékleti adatok:")
         print(df)
@@ -62,7 +62,7 @@ def display_panel(df,adag_id=None,panel_id=None,adag_id_2=None,panel_id_2=None):
         plt.tight_layout()
 
         # Kép mentése teljes képernyővel
-        plt.savefig(os.path.join(r'../db_creator/output', f'{time.time()}_adag_{adag_id}_panelek_homerseklet.png'),
+        plt.savefig(os.path.join(r'../db_creator/output', f'{time.time()}_{}_{adag_id || panel_id}_panelek_homerseklet.png'),
                     bbox_inches='tight', dpi=300)
         plt.show()
     else:
@@ -113,3 +113,18 @@ def show_all_panel():
     adag_id = input("Kérjük, adja meg az adag_id-t:")
     query_temperature_data_use(adag_id)
     print('az összes panel bemutatása')
+
+def show_all_portion():
+    panel_id = input("Kérjük, adja meg a hutopanel_id-t:")
+    print('.....Hömérsékleti adatok lekérdezése.....')
+
+    df = None
+
+    try:
+        df = db.query(all_portion_query, (panel_id,))
+        display_panel(df, panel_id)
+
+    except Exception as e:
+        print("Hiba történt a lekérdezés során:", e)
+
+    print('az összes adag bemutatása az adott penelen')

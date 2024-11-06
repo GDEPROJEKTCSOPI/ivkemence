@@ -52,3 +52,10 @@ all_panel_query = '''
             JOIN adagok a ON h.adag_id = a.adag_id
             WHERE h.adag_id = ? 
         '''
+
+all_portion_query = '''
+            SELECT h.*, a.*
+            FROM homerseklet h
+            JOIN adagok a ON h.adag_id = a.adag_id
+            WHERE h.hutopanel_id = ? 
+'''
