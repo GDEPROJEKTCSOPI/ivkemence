@@ -4,6 +4,17 @@ temp_query = '''
             WHERE hutopanel_id = ? AND adag_id = ?        
         '''
 
+temp_between_query = '''
+            SELECT * FROM homerseklet
+            WHERE (homerseklet < ? OR homerseklet > ?)
+            AND adag_id = ? AND hutopanel_id = ?;
+        '''
+
+existing_panels_and_portions_query = '''
+    SELECT DISTINCT hutopanel_id, adag_id 
+    FROM homerseklet
+'''
+
 portion_query = '''
             SELECT DISTINCT adag_id, start_datetime, end_datetime
             FROM adagok

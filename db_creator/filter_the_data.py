@@ -1,18 +1,13 @@
 import pandas as pd
 import sqlite3
-import sys
-import os
+from src.classes.queries import temp_query, existing_panels_and_portions_query, temp_between_query
+from src.classes.mutations import delete_temp_between
 
 db_path = r'output/ivkemence.db'
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
-kuszob = 70
-
-cursor.execute('''
-    SELECT DISTINCT hutopanel_id, adag_id 
-    FROM homerseklet
-''')
+cursor.execute(existing_panels_and_portions_query)
 valid_combinations = cursor.fetchall()
 
 log_file_path = "output/torolt_rekordok.txt"
@@ -23,28 +18,18 @@ with open(log_file_path, "w") as log_file:
 for hutopanel_id, adag_id in valid_combinations:
     print(f'hutopanel : {hutopanel_id}, adag:  {adag_id}')
 
-    cursor.execute('''
-              SELECT homerseklet 
-              FROM homerseklet
-              WHERE adag_id = ? AND hutopanel_id = ?
-          ''', (adag_id, hutopanel_id))
+    cursor.execute(temp_query, (hutopanel_id,adag_id))
 
-    # Collect the temperature values in a list
     homerseklet_list = [row[0] for row in cursor.fetchall()]
 
     df = pd.DataFrame(homerseklet_list,columns=['homerseklet'])
-    avg = df['homerseklet'].mean()
 
-    intervallum = avg * (kuszob/100)
-    also_kuszob = avg - intervallum
-    felso_kuszob = avg + intervallum
+    also_kuszob = 0
+    felso_kuszob = 100
 
+    adag_id_and_panel_id_not_for_valid_datas =[]
 
-    cursor.execute('''
-            SELECT * FROM homerseklet
-            WHERE (homerseklet < ? OR homerseklet > ?)
-            AND adag_id = ? AND hutopanel_id = ?;
-        ''', (also_kuszob, felso_kuszob, adag_id, hutopanel_id))
+    cursor.execute(temp_between_query, (also_kuszob, felso_kuszob, adag_id, hutopanel_id))
     deleted_records = cursor.fetchall()
 
     with open(log_file_path, "a") as log_file:
@@ -54,14 +39,12 @@ for hutopanel_id, adag_id in valid_combinations:
                 log_file.write(f"Also küszöb: {also_kuszob:.2f}, Felso küszöb: {felso_kuszob:.2f}\n")
                 for record in deleted_records:
                     log_file.write(f"{record}\n")
-        else:
-           continue
 
-    cursor.execute('''
-        DELETE FROM homerseklet
-        WHERE (homerseklet < ? OR homerseklet > ?)
-        AND adag_id = ? AND hutopanel_id = ?;
-    ''', (also_kuszob, felso_kuszob, adag_id, hutopanel_id))
+            if (hutopanel_id, adag_id) not in adag_id_and_panel_id_not_for_valid_datas:
+                adag_id_and_panel_id_not_for_valid_datas.append((hutopanel_id, adag_id))
+
+    for hutopanel_id, adag_id in adag_id_and_panel_id_not_for_valid_datas:
+        cursor.execute(delete_temp_between, (adag_id, hutopanel_id))
 
 conn.commit()
 conn.close()
