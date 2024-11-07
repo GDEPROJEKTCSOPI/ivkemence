@@ -19,7 +19,7 @@ def insert_temperature_data(hutopanel_id, adag_id, homerseklet):
             print("Nem található ilyen adag azonosító az adatbázisban")
             return
 
-        db.execute('''
+        db.execute_transaction('''
             INSERT INTO homerseklet 
                 (hutopanel_id, adag_id, datumido, homerseklet)
             VALUES 
