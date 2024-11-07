@@ -23,10 +23,10 @@ class Database:
             self.db_connection.commit()
 
             print("Érintett sorok száma: " + str(cursor.rowcount))
-
-            cursor.close()
         except Exception as e:
             print(e)
+        finally:
+            cursor.close()
 
     # Eljárás commintolni való tömeges SQL utasításokhoz (INSERT, UPDATE, DELETE)
     def execute_many(self, sql: str, data: list):
@@ -37,10 +37,28 @@ class Database:
             self.db_connection.commit()
 
             print("Érintett sorok száma: " + str(cursor.rowcount))
-
-            cursor.close()
         except Exception as e:
             print(e)
+        finally:
+            cursor.close()
+
+    def execute_transaction(self, *sql: str):
+        try:
+            cursor = self.db_connection.cursor()
+
+            cursor.execute('BEGIN TRANSACTION;')
+            for statement in sql:
+                cursor.execute(statement)
+            self.db_connection.commit()
+
+            print("Érintett sorok száma: " + str(cursor.rowcount))
+        except Exception as e:
+            self.db_connection.rollback()
+
+            print("Tranzakció sikertelen")
+            print(e)
+        finally:
+            cursor.close()
 
     # Függvény queryhez, ami egy pandas dataframemel tér vissza (SELECT)
     def query(self, sql: str, params=None):
