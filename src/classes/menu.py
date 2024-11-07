@@ -27,6 +27,9 @@ class Menu(cmd.Cmd):
         """
     prompt  = 'IVKEMENCE CLI > '
 
+    def emptyline(self):
+        pass
+
     # Adagok adatinak lekérdezése az adatbázisból.
     def do_get_portion_data(self, arg):
         query_portion_data()
