@@ -23,10 +23,10 @@ class Database:
             self.db_connection.commit()
 
             print("Érintett sorok száma: " + str(cursor.rowcount))
-
-            cursor.close()
         except Exception as e:
             print(e)
+        finally:
+            cursor.close()
 
     # Eljárás commintolni való tömeges SQL utasításokhoz (INSERT, UPDATE, DELETE)
     def execute_many(self, sql: str, data: list):
@@ -37,10 +37,10 @@ class Database:
             self.db_connection.commit()
 
             print("Érintett sorok száma: " + str(cursor.rowcount))
-
-            cursor.close()
         except Exception as e:
             print(e)
+        finally:
+            cursor.close()
 
     def execute_transaction(self, *sql: str):
         try:
