@@ -1,13 +1,13 @@
 import os.path
 
 from src.classes.database_instance import db
-from src.classes.queries import one_panel_query, two_panel_query, all_panel_query,all_portion_query
+from src.classes.queries import calculate_stat,one_panel_query, two_panel_query, all_panel_query,all_portion_query
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
 
 
-def display_panel(df,adag_id=None,panel_id=None,panel_id_2=None):
+def display_panel(df,df2=None,adag_id=None,panel_id=None,panel_id_2=None):
     if df is not None and not df.empty:
         print("Lekérdezett hőmérsékleti adatok:")
         print(df)
@@ -46,15 +46,17 @@ def display_panel(df,adag_id=None,panel_id=None,panel_id_2=None):
             plt.plot(df['datumido'], df['homerseklet'], color='b',
                      label=f'{panel_id} panel hőmérséklete')
 
-            avg_temp = df['homerseklet'].mean()
-            median_temp = df['homerseklet'].median()
-            mode_temp = df['homerseklet'].mode()[0]
+            atlag = df2['atlag'].iloc[0]
+            min_temp = df2['min_temp'].iloc[0]
+            max_temp = df2['max_temp'].iloc[0]
+            median = df['homerseklet'].median()
+            modusz = df['homerseklet'].mode()[0]
 
-            plt.axhline(y=avg_temp, color='orange', linestyle='--', label='Átlag')
-            plt.axhline(y=median_temp, color='green', linestyle='--', label='Medián')
-            plt.axhline(y=mode_temp, color='purple', linestyle='--', label='Módusz')
-
-
+            plt.axhline(y=atlag, color='#007bff', label='Átlag')
+            plt.axhline(y=min_temp, color='#ff5722',  label='Minimum')
+            plt.axhline(y=max_temp, color='#9c27b0',  label='Maximum')
+            plt.axhline(y=median, color='#8bc34a',  label='Medián')
+            plt.axhline(y=modusz, color='#ffeb3b', label='Módusz')
 
             if adag_id is not None:
                 plt.title(f'{adag_id}. adag hőmérséklete a {panel_id}. panelen')
@@ -85,6 +87,7 @@ def query_temperature_data_use(*args):
     print('.....Hömérsékleti adatok lekérdezése.....')
 
     df = None
+    df2=None
 
     try:
         if len(args) == 1:
@@ -93,7 +96,8 @@ def query_temperature_data_use(*args):
 
         elif len(args) == 2:
             df = db.query(one_panel_query, (args[0], args[1]))
-            display_panel(df, adag_id=args[0], panel_id=args[1])
+            df2 = db.query(calculate_stat, (args[0],args[1]))
+            display_panel(df, df2=df2, adag_id=args[0], panel_id=args[1])
 
         elif len(args) == 3:
             df = db.query(two_panel_query, (args[0], args[1],args[0], args[2]))
