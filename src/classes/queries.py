@@ -29,8 +29,21 @@ one_panel_query = '''
             SELECT h.*, a.*
             FROM homerseklet h
             JOIN adagok a ON h.adag_id = a.adag_id
-            WHERE h.adag_id = ? AND a.idotartam < 120 AND h.hutopanel_id = ?  
+            WHERE h.adag_id = ? AND a.idotartam < 120 AND h.hutopanel_id = ?
         '''
+
+calculate_stat = '''
+        SELECT 
+            h.adag_id,
+            h.hutopanel_id,
+            AVG(h.homerseklet) AS atlag,
+            MIN(h.homerseklet) AS min_temp,
+            MAX(h.homerseklet) AS max_temp
+        FROM homerseklet h
+        JOIN adagok a ON h.adag_id = a.adag_id
+        WHERE h.adag_id = ? AND a.idotartam < 120 AND h.hutopanel_id = ?
+        GROUP BY h.adag_id, h.hutopanel_id  
+    '''
 
 two_panel_query = '''
             SELECT h.*, a.*
