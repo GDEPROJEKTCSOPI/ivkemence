@@ -12,7 +12,10 @@
 ## Kód futtatása:
 
 1. Klónozd a projektet GitHubról.
-2. Futtasd a terminálban, hogy telepítsd a szükséges csomagokat:  pip install -r requirements.txt
+2. Futtasd a terminálban, hogy telepítsd a szükséges csomagokat: 
+
+   pip install -r requirements.txt
+
 3. Nyisd meg a Python fájlt a kedvenc szövegszerkesztődben (pl. VSCode, PyCharm).
 4. Futtasd a db_creator/main.py-t
  - A kód futtatása új fájlokat fog generálni. Ne módosítsd ezeket közvetlenül, és ne töltsd fel őket GitHubra.
