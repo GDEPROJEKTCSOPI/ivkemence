@@ -46,17 +46,18 @@ def display_panel(df,df2=None,adag_id=None,panel_id=None,panel_id_2=None):
             plt.plot(df['datumido'], df['homerseklet'], color='b',
                      label=f'{panel_id} panel hőmérséklete')
 
-            atlag = df2['atlag'].iloc[0]
-            min_temp = df2['min_temp'].iloc[0]
-            max_temp = df2['max_temp'].iloc[0]
-            median = df['homerseklet'].median()
-            modusz = df['homerseklet'].mode()[0]
+            if df2 is not None and not df2.empty:
+                atlag = df2['atlag'].iloc[0]
+                min_temp = df2['min_temp'].iloc[0]
+                max_temp = df2['max_temp'].iloc[0]
+                median = df['homerseklet'].median()
+                modusz = df['homerseklet'].mode()[0]
 
-            plt.axhline(y=atlag, color='#007bff', label='Átlag')
-            plt.axhline(y=min_temp, color='#ff5722',  label='Minimum')
-            plt.axhline(y=max_temp, color='#9c27b0',  label='Maximum')
-            plt.axhline(y=median, color='#8bc34a',  label='Medián')
-            plt.axhline(y=modusz, color='#ffeb3b', label='Módusz')
+                plt.axhline(y=atlag, color='#007bff', label='Átlag')
+                plt.axhline(y=min_temp, color='#ff5722',  label='Minimum')
+                plt.axhline(y=max_temp, color='#9c27b0',  label='Maximum')
+                plt.axhline(y=median, color='#8bc34a',  label='Medián')
+                plt.axhline(y=modusz, color='#ffeb3b', label='Módusz')
 
             if adag_id is not None:
                 plt.title(f'{adag_id}. adag hőmérséklete a {panel_id}. panelen')
